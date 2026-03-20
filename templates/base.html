@@ -1,0 +1,307 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Leave Management System</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        background: #f4f6f9;
+      }
+
+      /* NAVBAR */
+
+      .navbar {
+        height: 60px;
+        background: #1e293b;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 25px;
+      }
+
+      .navbar h2 {
+        font-size: 20px;
+      }
+
+      .navbar a {
+        color: white;
+        text-decoration: none;
+        margin-left: 20px;
+      }
+
+      /* MAIN LAYOUT */
+
+      .layout {
+        display: flex;
+      }
+
+      /* SIDEBAR */
+
+      .sidebar {
+        width: 220px;
+        background: #0f172a;
+        min-height: calc(100vh - 60px);
+        padding-top: 20px;
+      }
+
+      .sidebar a {
+        display: block;
+        color: #cbd5f5;
+        padding: 12px 20px;
+        text-decoration: none;
+        font-size: 15px;
+      }
+
+      .sidebar a:hover {
+        background: #1e293b;
+      }
+
+      /* MAIN CONTENT */
+
+      .content {
+        flex: 1;
+        padding: 30px;
+      }
+
+      /* PAGE TITLE */
+
+      .page-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #1e293b;
+      }
+
+      /* CARDS */
+
+      .card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: 0.2s;
+        text-align: center;
+      }
+
+      .card:hover {
+        transform: translateY(-3px);
+      }
+
+      .card h3 {
+        color: #1e293b;
+      }
+
+      /* BUTTON */
+
+      .btn {
+        display: inline-block;
+        background: #2563eb;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-bottom: 20px;
+      }
+
+      .btn:hover {
+        background: #1d4ed8;
+      }
+
+      /* TABLE */
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      .table th {
+        background: #f1f5f9;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .table td {
+        padding: 12px;
+        border-top: 1px solid #eee;
+      }
+
+      /* BADGES */
+
+      .badge {
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 13px;
+        color: white;
+      }
+
+      .badge-approved {
+        background: #16a34a;
+      }
+
+      .badge-rejected {
+        background: #dc2626;
+      }
+
+      .badge-pending {
+        background: #f59e0b;
+      }
+
+      /* BUTTONS */
+
+      .btn {
+        padding: 6px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        text-decoration: none;
+        color: white;
+        margin-right: 5px;
+      }
+
+      .approve {
+        background: #16a34a;
+      }
+
+      .reject {
+        background: #dc2626;
+      }
+
+      .approve:hover {
+        background: #15803d;
+      }
+
+      .reject:hover {
+        background: #b91c1c;
+      }
+
+      /* FORM CARD */
+
+      .form-card {
+        background: white;
+        padding: 30px;
+        max-width: 70dvw;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      /* FORM GROUP */
+
+      .form-group {
+        margin-bottom: 18px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #1e293b;
+      }
+
+      /* INPUT FIELDS */
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        padding: 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+      }
+      /* TEXTAREA HEIGHT */
+
+      textarea {
+        min-height: 100px;
+      }
+
+      /* SUBMIT BUTTON */
+
+      .submit-btn {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .submit-btn:hover {
+        background: #1d4ed8;
+      }
+
+      /* ERROR BOX */
+
+      .error-box {
+        background: #fee2e2;
+        color: #991b1b;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+      }
+
+      /* FIELD ERROR */
+
+      .errorlist {
+        color: #dc2626;
+        font-size: 13px;
+        margin-top: 5px;
+        list-style: none;
+        padding: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+      <h2>
+        LMS {% if user.is_authenticated and user.is_staff %} Admin Panel 
+        {% else %} Portal {% endif %}
+      </h2>
+
+      <div>
+        {% if user.is_authenticated %}
+        <span>{{ user.username }}</span>
+        <a href="{% url 'logout' %}">Logout</a>
+        {% else %}  
+        <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="layout">
+      <!-- SIDEBAR -->
+
+      <div class="sidebar">
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+
+        <a href="{% url 'leave_requests' %}"> Leave Requests </a>
+      </div>
+
+      <!-- MAIN CONTENT -->
+
+      <div class="content">{% block content %} {% endblock %}</div>
+    </div>
+  </body>
+</html>

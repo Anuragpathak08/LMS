@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Login | LMS</title>
+
+    <style>
+      body {
+        background: #f4f6f9;
+        font-family: Arial;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .login-container {
+        background: white;
+        padding: 40px;
+        width: 350px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .login-container h2 {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .input-group {
+        margin-bottom: 15px;
+      }
+
+      .input-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .login-btn {
+        width: 100%;
+        padding: 10px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .login-btn:hover {
+        background: #1d4ed8;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="login-container">
+      <h2>LMS Login</h2>
+
+      <form method="post">
+        {% csrf_token %} 
+        {% if form.non_field_errors %}
+        <div class="error-box">
+          {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="input-group">
+          <label>Username</label>
+          <input type="text" name="username" />
+        </div>
+
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" name="password" />
+        </div>
+
+        <button class="login-btn" type="submit">Login</button>
+      </form>
+      <p style="text-align: center; margin-top: 15px">
+        Don't have an account?
+
+        <a href="{% url 'signup' %}">Signup</a>
+      </p>
+    </div>
+  </body>
+</html>

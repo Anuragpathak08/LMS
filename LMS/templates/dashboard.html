@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="page-title">Departments</h2>
+
+<div class="card-container">
+
+{% for dept in departments %}
+
+<a href="{% url 'department_employees' dept.id %}" style="text-decoration:none;">
+
+<div class="card">
+
+<h3>{{ dept.name }}</h3>
+
+<p>View Employees & Leaves</p>
+
+</div>
+
+</a>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

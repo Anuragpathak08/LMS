@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block content %}
+
+<h2 class="page-title">Apply for Leave</h2>
+
+<div class="form-card">
+  <form method="post">
+    {% csrf_token %} 
+    {% if form.non_field_errors %}
+      <div class="error-box">
+        {% for error in form.non_field_errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="form-group">
+      <label for="{{ form.start_date.id_for_label}}">Start Date</label>
+      {{ form.start_date }}
+    </div>
+
+    <div class="form-group">
+      <label>End Date</label>
+      {{ form.end_date }}
+    </div>
+
+    <div class="form-group">
+      <label>Reason</label>
+      {{ form.reason }}
+    </div>
+
+    <button type="submit" class="submit-btn">Apply Leave</button>
+  </form>
+</div>
+
+{% endblock %}
