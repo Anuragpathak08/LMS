@@ -1,0 +1,13 @@
+LMS/migrations/__pycache__/
+LMS/__pycache__/
+LMS/migrations/*
+!LMS/migrations/.gitkeep
+!LMS/migrations/__init__.py
+account/migrations/__pycache__/
+account/__pycache__/
+account/migrations/*
+!account/migrations/.gitkeep
+!account/migrations/__init__.py
+jntu_dashboard/__pycache__/
+db.sqlite3
+*.pyc
